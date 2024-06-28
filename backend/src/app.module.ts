@@ -5,6 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ServiceModule } from './service/service.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { AppCacheModule } from './cache/cache.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
@@ -31,8 +34,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
     UsersModule,
     AuthModule,
     ServiceModule,
+    AppCacheModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [{ provide: APP_GUARD, useClass: AuthGuard }],
 })
 export class AppModule {}
