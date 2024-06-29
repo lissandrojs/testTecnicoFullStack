@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   async signIn(email: string, password: string): Promise<any> {
-    const user = await this.userService.findById(email);
+    const user = await this.userService.findByEmail(email);
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -28,7 +28,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { email: user.email, name: user.name };
+    const payload = { email: user.email, name: user.username };
     const token = {
       token: await this.jwtService.signAsync(payload),
     };
