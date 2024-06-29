@@ -13,11 +13,13 @@ exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
 const jwt_1 = require("@nestjs/jwt");
+const cache_service_1 = require("../cache/cache.service");
 const constants_1 = require("./constants/constants");
 let AuthGuard = class AuthGuard {
-    constructor(jwtService, reflector) {
+    constructor(jwtService, reflector, redisCache) {
         this.jwtService = jwtService;
         this.reflector = reflector;
+        this.redisCache = redisCache;
     }
     async canActivate(context) {
         const isPublic = this.reflector.getAllAndOverride(constants_1.IS_PUBLIC_KEY, [
@@ -29,7 +31,7 @@ let AuthGuard = class AuthGuard {
         }
         const request = context.switchToHttp().getRequest();
         const token = this.extractTokenFromHeader(request);
-        const redisToken = '';
+        const redisToken = await this.redisCache.retrieveData(token);
         if (!token || !redisToken) {
             throw new common_1.UnauthorizedException();
         }
@@ -53,6 +55,7 @@ exports.AuthGuard = AuthGuard;
 exports.AuthGuard = AuthGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService,
-        core_1.Reflector])
+        core_1.Reflector,
+        cache_service_1.CacheService])
 ], AuthGuard);
 //# sourceMappingURL=auth.guard.js.map

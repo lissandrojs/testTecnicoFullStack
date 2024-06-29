@@ -8,4 +8,5 @@ export declare class UsersController {
     findOne(id: string): Promise<any>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<any>;
     remove(id: string): Promise<any>;
+    resetPassword(email: string): any;
 }

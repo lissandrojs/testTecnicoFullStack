@@ -14,6 +14,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const auth_module_1 = require("./auth/auth.module");
 const service_module_1 = require("./service/service.module");
 const mailer_1 = require("@nestjs-modules/mailer");
+const cache_module_1 = require("./cache/cache.module");
+const core_1 = require("@nestjs/core");
+const auth_guard_1 = require("./auth/auth.guard");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -43,9 +46,10 @@ exports.AppModule = AppModule = __decorate([
             users_module_1.UsersModule,
             auth_module_1.AuthModule,
             service_module_1.ServiceModule,
+            cache_module_1.AppCacheModule,
         ],
         controllers: [],
-        providers: [],
+        providers: [{ provide: core_1.APP_GUARD, useClass: auth_guard_1.AuthGuard }],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

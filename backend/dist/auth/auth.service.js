@@ -13,11 +13,13 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = require("bcrypt");
+const cache_service_1 = require("../cache/cache.service");
 const users_service_1 = require("../users/users.service");
 let AuthService = class AuthService {
-    constructor(userService, jwtService) {
+    constructor(userService, jwtService, redisCache) {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.redisCache = redisCache;
     }
     async compareHash(password, hash) {
         return await bcrypt.compare(password, hash);
@@ -35,6 +37,7 @@ let AuthService = class AuthService {
         const token = {
             token: await this.jwtService.signAsync(payload),
         };
+        await this.redisCache.storeData(token.token);
         return token;
     }
 };
@@ -42,6 +45,7 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        cache_service_1.CacheService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

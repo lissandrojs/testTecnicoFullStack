@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { CacheService } from 'src/cache/cache.service';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -9,6 +10,7 @@ export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
+    private redisCache: CacheService,
   ) {}
 
   async compareHash(password: string, hash: string): Promise<boolean> {
@@ -31,6 +33,7 @@ export class AuthService {
       token: await this.jwtService.signAsync(payload),
     };
 
+    await this.redisCache.storeData(token.token);
     return token;
   }
 }

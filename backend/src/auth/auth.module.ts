@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants/constants';
+import { AppCacheModule } from 'src/cache/cache.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { jwtConstants } from './constants/constants';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '6000s' },
     }),
+    AppCacheModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],
