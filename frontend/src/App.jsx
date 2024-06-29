@@ -1,38 +1,44 @@
-import React from 'react';
-import { ThemeProvider, createTheme, CssBaseline, Container, Box } from '@mui/material';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-import { AuthProvider } from './context/AuthContext';
-import AppRouter from './router';
-import Layout from './layout/Layout';
+import React from "react";
+import {
+  ThemeProvider,
+  createTheme,
+  CssBaseline,
+  Container,
+  Box,
+} from "@mui/material";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "./context/AuthContext";
+import AppRouter from "./router";
+import Layout from "./layout/Layout";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#343795',
-      dark: '#070707',
-      contrastText: '#FFFFFF',
+      main: "#343795",
+      dark: "#070707",
+      contrastText: "#FFFFFF",
     },
     secondary: {
-      main: '#E83F5B',
+      main: "#E83F5B",
     },
     text: {
-      primary: '#F8F9FA',
+      primary: "#F8F9FA",
     },
     background: {
-      default: '#363535',
-      paper: '#c1c7cc',
+      default: "#363535",
+      paper: "#c1c7cc",
     },
-    p:{
-      primary:'#CCCC'
-    }
+    p: {
+      primary: "#CCCC",
+    },
   },
 });
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline /> 
+      <CssBaseline />
       <AuthProvider>
         <Layout>
           <ToastContainer
@@ -46,7 +52,13 @@ const App = () => {
             draggable
             pauseOnHover
           />
-          <Container sx={{ marginTop: '20px' }}>
+          <Container
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             <AppRouter />
           </Container>
         </Layout>
