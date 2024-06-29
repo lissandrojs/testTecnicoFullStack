@@ -95,9 +95,7 @@ const Register = () => {
                             Cadastrar
                         </Button>
                     </Box>
-
                 </Box>
-
             </Container>
         </>
     );

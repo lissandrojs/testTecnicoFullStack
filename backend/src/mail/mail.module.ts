@@ -3,6 +3,7 @@ import { MailService } from './mail.service';
 import { MailController } from './mail.controller';
 import { UsersModule } from '../users/users.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
         },
       },
     }),
+    AuthModule,
   ],
   controllers: [MailController],
   providers: [MailService],

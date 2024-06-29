@@ -24,6 +24,11 @@ export class UsersService {
     return result;
   }
 
+  async alterPassword(id: string, password: string) {
+    const hashPassword = await this.getHash(password);
+    return await this.userRepository.update(id, { password: hashPassword });
+  }
+
   async update(id: string, user: UpdateUserDto): Promise<any> {
     return await this.userRepository.update(id, { ...user });
   }

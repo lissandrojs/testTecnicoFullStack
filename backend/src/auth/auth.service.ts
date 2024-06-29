@@ -17,6 +17,14 @@ export class AuthService {
     return await bcrypt.compare(password, hash);
   }
 
+  async genereteToken(payload) {
+    const token = {
+      token: await this.jwtService.signAsync(payload),
+    };
+
+    return token;
+  }
+
   async signIn(email: string, password: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
     if (!user) {
@@ -29,9 +37,8 @@ export class AuthService {
     }
 
     const payload = { email: user.email, name: user.username };
-    const token = {
-      token: await this.jwtService.signAsync(payload),
-    };
+
+    const token = await this.genereteToken(payload);
 
     await this.redisCache.storeData(token.token);
     return token;

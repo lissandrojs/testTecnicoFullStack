@@ -25,19 +25,19 @@ const RecoverPassword = () =>{
             email,
         };
         
-        api.post("users/resetPassword", newLog).then((resp) => {
+        api.post("mail/recover", newLog).then((resp) => {
+            toast.success("Email enviado.");
             navigate('/login')
         })
         .catch((error) => {
-            toast.error("Email incorretos");
+            toast.error("Algo deu errado .");
             console.log(error);
         });
     };
 
     return (
         <>
-        <Box>
-            <FormControl onSubmit={handleSubmit(onSubmitRecover)}>
+            <Box component="form" onSubmit={handleSubmit(onSubmitRecover)}>
                     <Typography variant="h4" component="h3" gutterBottom>
                         Recuperar Senha
                     </Typography>
@@ -54,13 +54,12 @@ const RecoverPassword = () =>{
                         <Button
                             variant="contained"
                             color="secondary"
-                            fullWidth
+                            type="submit"
                         >
                             Enviar
                         </Button>
                     </Box>
-            </FormControl>
-        </Box>
+            </Box>
         </>
     )
 }

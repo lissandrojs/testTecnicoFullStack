@@ -33,7 +33,7 @@ const Login = ({}) => {
             email,
             password
         };
-        api.post("login", newLog).then((resp) => {
+        api.post("auth/login", newLog).then((resp) => {
             const { token } = resp.data;
             login(token);
             navigate('/');
@@ -46,7 +46,7 @@ const Login = ({}) => {
 
     return (
         <Box>
-            <FormControl onSubmit={handleSubmit(onSubmitLogin)}>
+            <Box component="form" onSubmit={handleSubmit(onSubmitLogin)}>
                     <Typography variant="h4" component="h3" gutterBottom>
                         Login
                     </Typography>
@@ -93,7 +93,7 @@ const Login = ({}) => {
                             Cadastre-se
                         </Button>
                     </Box>
-            </FormControl>
+            </Box>
         </Box>
     );
 };

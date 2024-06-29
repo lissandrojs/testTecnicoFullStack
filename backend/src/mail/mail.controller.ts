@@ -8,8 +8,8 @@ export class MailController {
   constructor(private readonly mailService: MailService) {}
 
   @Public()
-  @Post()
-  create(@Body() createMailDto: CreateMailDto) {
+  @Post('/recover')
+  recoverPassword(@Body() createMailDto: CreateMailDto) {
     return this.mailService.resetPassword(createMailDto);
   }
 }

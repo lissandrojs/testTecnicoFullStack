@@ -15,7 +15,7 @@ const InsertNewPassword = () =>{
     const [searchParams] = useSearchParams();
 
     const token = searchParams.get('token');
-    const email =  searchParams.get('email')
+    const idUser =  searchParams.get('id')
 
     const schema = yup.object().shape({
         password: yup.string().required("Campo Obrigatório"),
@@ -26,8 +26,14 @@ const InsertNewPassword = () =>{
     });
 
     const onSubmitRecover = ({ password }) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
 
-        api.patch("users", {password, email }).then((resp) => {
+        api.patch(`users/recover/${idUser}`, {password},config).then((resp) => {
+            toast.success("senha alterada com sucesso");
             navigate('/login')
         })
         .catch((error) => {
@@ -37,9 +43,7 @@ const InsertNewPassword = () =>{
     };
 
     return (
-        <>
-        <Box>
-            <FormControl onSubmit={handleSubmit(onSubmitRecover)}>
+            <Box component="form" onSubmit={handleSubmit(onSubmitRecover)}>
                     <Typography variant="h4" component="h3" gutterBottom>
                         Cadastrar nova Senha
                     </Typography>
@@ -56,14 +60,12 @@ const InsertNewPassword = () =>{
                         <Button
                             variant="contained"
                             color="secondary"
-                            fullWidth
+                            type="submit"
                         >
                             Enviar
                         </Button>
                     </Box>
-            </FormControl>
-        </Box>
-        </>
+            </Box>
     )
 }
 
